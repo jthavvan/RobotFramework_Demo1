@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 4.1.3 (Python 3.10.4 on win32)" generated="20220422 09:29:03.891" rpa="false" schemaversion="2">
+<suite id="s1" name="PageObjectModel OrangeHRM" source="C:\RobotFramework_Training\RobotFramework_Demo1\PageObjectModel\PageObjectModel_OrangeHRM.robot">
+<test id="s1-t1" name="Verify Successful Login to OrangeHRM">
+<kw name="Opening Browser" library="Common">
+<arg>${site_url}</arg>
+<arg>${browser}</arg>
+<kw name="Open Browser" library="SeleniumLibrary">
+<arg>${site_url}</arg>
+<arg>${browser}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<msg timestamp="20220422 09:29:04.156" level="INFO">Opening browser 'Chrome' to base url 'https://opensource-demo.orangehrmlive.com/'.</msg>
+<status status="PASS" starttime="20220422 09:29:04.156" endtime="20220422 09:29:06.551"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${LoginUsernameInputBox}</arg>
+<arg>timeout=5</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20220422 09:29:06.552" endtime="20220422 09:29:06.591"/>
+</kw>
+<status status="PASS" starttime="20220422 09:29:04.156" endtime="20220422 09:29:06.591"/>
+</kw>
+<kw name="Input Username" library="LoginPage">
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>${LoginUsernameInputBox}</arg>
+<arg>${Username}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20220422 09:29:06.593" level="INFO">Typing text 'Admin' into text field 'id:txtUsername'.</msg>
+<status status="PASS" starttime="20220422 09:29:06.592" endtime="20220422 09:29:06.705"/>
+</kw>
+<status status="PASS" starttime="20220422 09:29:06.592" endtime="20220422 09:29:06.705"/>
+</kw>
+<kw name="Input Password" library="LoginPage">
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>${LoginPasswordInputBox}</arg>
+<arg>${Password}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20220422 09:29:06.707" level="INFO">Typing text 'admin123' into text field 'id:txtPassword'.</msg>
+<status status="PASS" starttime="20220422 09:29:06.706" endtime="20220422 09:29:06.814"/>
+</kw>
+<status status="PASS" starttime="20220422 09:29:06.705" endtime="20220422 09:29:06.815"/>
+</kw>
+<kw name="Click Login" library="LoginPage">
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>${LoginButton}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20220422 09:29:06.818" level="INFO">Clicking element 'id:btnLogin'.</msg>
+<status status="PASS" starttime="20220422 09:29:06.817" endtime="20220422 09:29:07.903"/>
+</kw>
+<status status="PASS" starttime="20220422 09:29:06.816" endtime="20220422 09:29:07.903"/>
+</kw>
+<kw name="Verify Welcome Text is Visible" library="HomePage">
+<kw name="Element Should Be Visible" library="SeleniumLibrary">
+<arg>${WelcomeText}</arg>
+<arg>timeout=5</arg>
+<doc>Verifies that the element identified by ``locator`` is visible.</doc>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20220422 09:29:08.108" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-1.png"&gt;&lt;img src="selenium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20220422 09:29:07.925" endtime="20220422 09:29:08.108"/>
+</kw>
+<msg timestamp="20220422 09:29:08.141" level="FAIL">Element with locator 'id:welcome' not found.</msg>
+<status status="FAIL" starttime="20220422 09:29:07.904" endtime="20220422 09:29:08.141"/>
+</kw>
+<status status="FAIL" starttime="20220422 09:29:07.904" endtime="20220422 09:29:08.141"/>
+</kw>
+<kw name="Logout" library="HomePage">
+<status status="NOT RUN" starttime="20220422 09:29:08.141" endtime="20220422 09:29:08.141"/>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="NOT RUN" starttime="20220422 09:29:08.141" endtime="20220422 09:29:08.141"/>
+</kw>
+<doc>This test case verifies that the user is able to successfully Login and Logout to OrangeHRM using Page Object</doc>
+<tag>Smoke</tag>
+<status status="FAIL" starttime="20220422 09:29:04.156" endtime="20220422 09:29:08.141">Element with locator 'id:welcome' not found.</status>
+</test>
+<doc>Page Object in Robot Framework</doc>
+<status status="FAIL" starttime="20220422 09:29:03.891" endtime="20220422 09:29:08.141"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="0" fail="1" skip="0">Smoke</stat>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="PageObjectModel OrangeHRM">PageObjectModel OrangeHRM</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

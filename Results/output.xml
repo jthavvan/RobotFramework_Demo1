@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0 (Python 3.10.4 on win32)" generated="20220422 05:27:16.392" rpa="false" schemaversion="3">
+<suite id="s1" name="FullFlow with dynamic token" source="C:\RobotFramework_Training\RobotFramework_Demo1\API_TestScripts\FullFlow_with_dynamic_token.robot">
+<test id="s1-t1" name="Create or Refresh Token" line="11">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>mysession</arg>
+<arg>${base_url}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220422 05:27:16.673" level="INFO">Creating Session using : alias=mysession, url=https://demo.spreecommerce.org, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20220422 05:27:16.657" endtime="20220422 05:27:16.673"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${header}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220422 05:27:16.673" level="INFO">${header} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20220422 05:27:16.673" endtime="20220422 05:27:16.673"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${req_body}</var>
+<arg>API_TestScripts/TestData/Create_Token.json</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20220422 05:27:16.673" level="INFO" html="true">Getting file '&lt;a href="file://C:\RobotFramework_Training\RobotFramework_Demo1\API_TestScripts\TestData\Create_Token.json"&gt;C:\RobotFramework_Training\RobotFramework_Demo1\API_TestScripts\TestData\Create_Token.json&lt;/a&gt;'.</msg>
+<msg timestamp="20220422 05:27:16.673" level="INFO">${req_body} = {
+  "grant_type": "password",
+  "username": "jaggu@spree.org",
+  "password": "admin123"
+}</msg>
+<status status="PASS" starttime="20220422 05:27:16.673" endtime="20220422 05:27:16.673"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${req_body}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:16.673" endtime="20220422 05:27:16.673"/>
+</kw>
+<kw name="Convert String to JSON" library="JSONLibrary">
+<var>${json_body}</var>
+<arg>${req_body}</arg>
+<doc>Convert String to JSON object</doc>
+<msg timestamp="20220422 05:27:16.673" level="INFO">${json_body} = {'grant_type': 'password', 'username': 'jaggu@spree.org', 'password': 'admin123'}</msg>
+<status status="PASS" starttime="20220422 05:27:16.673" endtime="20220422 05:27:16.673"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>mysession</arg>
+<arg>/spree_oauth/token</arg>
+<arg>json=${json_body}</arg>
+<arg>headers=${header}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20220422 05:27:16.782" level="INFO">POST Request : url=https://demo.spreecommerce.org/spree_oauth/token 
+ path_url=/spree_oauth/token 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '81'} 
+ body=b'{"grant_type": "password", "username": "jaggu@spree.org", "password": "admin123"}' 
+ </msg>
+<msg timestamp="20220422 05:27:16.782" level="INFO">POST Response : url=https://demo.spreecommerce.org/spree_oauth/token 
+ status=200, reason=OK 
+ headers={'Server': 'Cowboy', 'Connection': 'keep-alive', 'X-Frame-Options': 'SAMEORIGIN', 'X-Xss-Protection': '1; mode=block', 'X-Content-Type-Options': 'nosniff', 'X-Download-Options': 'noopen', 'X-Permitted-Cross-Domain-Policies': 'none', 'Referrer-Policy': 'strict-origin-when-cross-origin', 'Cache-Control': 'no-store', 'Pragma': 'no-cache', 'Content-Type': 'application/json; charset=utf-8', 'Vary': 'Accept, Origin', 'Etag': 'W/"995099337cb68f7e43da5382f48882b0"', 'X-Request-Id': '7bb5b2a7-fa66-4947-8973-0b26724c67e8', 'X-Runtime': '0.039627', 'Date': 'Fri, 22 Apr 2022 05:27:16 GMT', 'X-Rack-Cache': 'invalidate, pass', 'Transfer-Encoding': 'chunked', 'Via': '1.1 vegur'} 
+ body={"access_token":"Gdpna9T7LYoPoVS6n_azqK7ZXe27uvvj_eSQ2ltN7-4","token_type":"Bearer","expires_in":7200,"refresh_token":"0S_yL5fLTMz9WFjgZD2JYITOhm5s815LYDpDoor4tQM","created_at":1650605236} 
+ </msg>
+<msg timestamp="20220422 05:27:16.782" level="INFO">C:\RobotFramework_Training\RobotFramework_Demo1\venv\lib\site-packages\urllib3\connectionpool.py:1043: InsecureRequestWarning: Unverified HTTPS request is being made to host 'demo.spreecommerce.org'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20220422 05:27:16.782" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220422 05:27:16.673" endtime="20220422 05:27:16.782"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:16.782" endtime="20220422 05:27:16.782"/>
+</kw>
+<kw name="To Json" library="RequestsLibrary">
+<var>${response_body}</var>
+<arg>${response.content}</arg>
+<arg>pretty_print = True</arg>
+<doc>*DEPRECATED* Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</doc>
+<msg timestamp="20220422 05:27:16.782" level="WARN">Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</msg>
+<msg timestamp="20220422 05:27:16.782" level="INFO">To JSON using : content={"access_token":"Gdpna9T7LYoPoVS6n_azqK7ZXe27uvvj_eSQ2ltN7-4","token_type":"Bearer","expires_in":7200,"refresh_token":"0S_yL5fLTMz9WFjgZD2JYITOhm5s815LYDpDoor4tQM","created_at":1650605236} </msg>
+<msg timestamp="20220422 05:27:16.782" level="INFO">To JSON using : pretty_print=pretty_print = True </msg>
+<msg timestamp="20220422 05:27:16.782" level="INFO">${response_body} = {
+    "access_token": "Gdpna9T7LYoPoVS6n_azqK7ZXe27uvvj_eSQ2ltN7-4",
+    "created_at": 1650605236,
+    "expires_in": 7200,
+    "refresh_token": "0S_yL5fLTMz9WFjgZD2JYITOhm5s815LYDpDoor4tQM",
+    "toke...</msg>
+<status status="PASS" starttime="20220422 05:27:16.782" endtime="20220422 05:27:16.782"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response_body}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:16.782" endtime="20220422 05:27:16.782"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${status_code}</var>
+<arg>${response.status_code}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20220422 05:27:16.798" level="INFO">${status_code} = 200</msg>
+<status status="PASS" starttime="20220422 05:27:16.798" endtime="20220422 05:27:16.798"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${status_code}</arg>
+<arg>200</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20220422 05:27:16.798" endtime="20220422 05:27:16.798"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${status_code}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:16.798" endtime="20220422 05:27:16.798"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${access_token}</var>
+<arg>${response.json()}</arg>
+<arg>$.access_token</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20220422 05:27:16.813" level="INFO">${access_token} = ['Gdpna9T7LYoPoVS6n_azqK7ZXe27uvvj_eSQ2ltN7-4']</msg>
+<status status="PASS" starttime="20220422 05:27:16.798" endtime="20220422 05:27:16.813"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${access_token[0]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:16.813" endtime="20220422 05:27:16.813"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${access_token_final}</var>
+<arg>${access_token[0]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20220422 05:27:16.813" level="INFO">${access_token_final} = Gdpna9T7LYoPoVS6n_azqK7ZXe27uvvj_eSQ2ltN7-4</msg>
+<status status="PASS" starttime="20220422 05:27:16.813" endtime="20220422 05:27:16.813"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${access_token_final}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20220422 05:27:16.813" level="INFO">${access_token_final} = Gdpna9T7LYoPoVS6n_azqK7ZXe27uvvj_eSQ2ltN7-4</msg>
+<status status="PASS" starttime="20220422 05:27:16.813" endtime="20220422 05:27:16.813"/>
+</kw>
+<status status="PASS" starttime="20220422 05:27:16.657" endtime="20220422 05:27:16.813"/>
+</test>
+<test id="s1-t2" name="Create an Address" line="37">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>mysession</arg>
+<arg>${base_url}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220422 05:27:16.829" level="INFO">Creating Session using : alias=mysession, url=https://demo.spreecommerce.org, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20220422 05:27:16.829" endtime="20220422 05:27:16.829"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${access_token_final}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:16.829" endtime="20220422 05:27:16.829"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Authorization=Bearer ${access_token_final}</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220422 05:27:16.829" level="INFO">${headers} = {'Authorization': 'Bearer Gdpna9T7LYoPoVS6n_azqK7ZXe27uvvj_eSQ2ltN7-4', 'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20220422 05:27:16.829" endtime="20220422 05:27:16.829"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${headers}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:16.829" endtime="20220422 05:27:16.829"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${req_body}</var>
+<arg>API_TestScripts/TestData/CreateAddress.json</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20220422 05:27:16.829" level="INFO" html="true">Getting file '&lt;a href="file://C:\RobotFramework_Training\RobotFramework_Demo1\API_TestScripts\TestData\CreateAddress.json"&gt;C:\RobotFramework_Training\RobotFramework_Demo1\API_TestScripts\TestData\CreateAddress.json&lt;/a&gt;'.</msg>
+<msg timestamp="20220422 05:27:16.829" level="INFO">${req_body} = {
+  "address": {
+    "firstname": "Jagan",
+    "lastname": "Reddy",
+    "company": "Paper Street Soap Co.",
+    "address1": "775 Old Georgetown Road",
+    "address2": "3rd Floor",
+    "city": "Qethesd...</msg>
+<status status="PASS" starttime="20220422 05:27:16.829" endtime="20220422 05:27:16.829"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${req_body}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:16.829" endtime="20220422 05:27:16.829"/>
+</kw>
+<kw name="Convert String to JSON" library="JSONLibrary">
+<var>${json_body}</var>
+<arg>${req_body}</arg>
+<doc>Convert String to JSON object</doc>
+<msg timestamp="20220422 05:27:16.829" level="INFO">${json_body} = {'address': {'firstname': 'Jagan', 'lastname': 'Reddy', 'company': 'Paper Street Soap Co.', 'address1': '775 Old Georgetown Road', 'address2': '3rd Floor', 'city': 'Qethesda', 'phone': '3488545445002'...</msg>
+<status status="PASS" starttime="20220422 05:27:16.829" endtime="20220422 05:27:16.829"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>mysession</arg>
+<arg>/api/v2/storefront/account/addresses</arg>
+<arg>json=${json_body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20220422 05:27:16.891" level="INFO">POST Request : url=https://demo.spreecommerce.org/api/v2/storefront/account/addresses 
+ path_url=/api/v2/storefront/account/addresses 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer Gdpna9T7LYoPoVS6n_azqK7ZXe27uvvj_eSQ2ltN7-4', 'Content-Type': 'application/json', 'Content-Length': '280'} 
+ body=b'{"address": {"firstname": "Jagan", "lastname": "Reddy", "company": "Paper Street Soap Co.", "address1": "775 Old Georgetown Road", "address2": "3rd Floor", "city": "Qethesda", "phone": "3488545445002", "zipcode": "90210", "state_name": "CA", "country_iso": "US", "label": "Home"}}' 
+ </msg>
+<msg timestamp="20220422 05:27:16.891" level="INFO">POST Response : url=https://demo.spreecommerce.org/api/v2/storefront/account/addresses 
+ status=200, reason=OK 
+ headers={'Server': 'Cowboy', 'Connection': 'keep-alive', 'X-Frame-Options': 'SAMEORIGIN', 'X-Xss-Protection': '1; mode=block', 'X-Content-Type-Options': 'nosniff', 'X-Download-Options': 'noopen', 'X-Permitted-Cross-Domain-Policies': 'none', 'Referrer-Policy': 'strict-origin-when-cross-origin', 'Content-Type': 'application/vnd.api+json; charset=utf-8', 'Etag': 'W/"69b893f1454c5ba956a0ac00305af8e5"', 'Cache-Control': 'max-age=0, private, must-revalidate', 'X-Request-Id': 'a1408f3a-3228-4738-8a6c-ea0081834068', 'X-Runtime': '0.034833', 'Date': 'Fri, 22 Apr 2022 05:27:16 GMT', 'X-Rack-Cache': 'invalidate, pass', 'Vary': 'Origin', 'Transfer-Encoding': 'chunked', 'Via': '1.1 vegur'} 
+ body={"data":{"id":"21507","type":"address","attributes":{"firstname":"Jagan","lastname":"Reddy","address1":"775 Old Georgetown Road","address2":"3rd Floor","city":"Qethesda","zipcode":"90210","phone":"3488545445002","state_name":"California","company":"Paper Street Soap Co.","country_name":"United States","country_iso3":"USA","country_iso":"US","label":"Home","state_code":"CA"}}} 
+ </msg>
+<msg timestamp="20220422 05:27:16.891" level="INFO">C:\RobotFramework_Training\RobotFramework_Demo1\venv\lib\site-packages\urllib3\connectionpool.py:1043: InsecureRequestWarning: Unverified HTTPS request is being made to host 'demo.spreecommerce.org'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20220422 05:27:16.891" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220422 05:27:16.829" endtime="20220422 05:27:16.891"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:16.891" endtime="20220422 05:27:16.891"/>
+</kw>
+<kw name="To Json" library="RequestsLibrary">
+<var>${response_body}</var>
+<arg>${response.content}</arg>
+<arg>pretty_print = True</arg>
+<doc>*DEPRECATED* Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</doc>
+<msg timestamp="20220422 05:27:16.891" level="WARN">Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</msg>
+<msg timestamp="20220422 05:27:16.891" level="INFO">To JSON using : content={"data":{"id":"21507","type":"address","attributes":{"firstname":"Jagan","lastname":"Reddy","address1":"775 Old Georgetown Road","address2":"3rd Floor","city":"Qethesda","zipcode":"90210","phone":"3488545445002","state_name":"California","company":"Paper Street Soap Co.","country_name":"United States","country_iso3":"USA","country_iso":"US","label":"Home","state_code":"CA"}}} </msg>
+<msg timestamp="20220422 05:27:16.891" level="INFO">To JSON using : pretty_print=pretty_print = True </msg>
+<msg timestamp="20220422 05:27:16.891" level="INFO">${response_body} = {
+    "data": {
+        "attributes": {
+            "address1": "775 Old Georgetown Road",
+            "address2": "3rd Floor",
+            "city": "Qethesda",
+            "company": "Paper Street Soa...</msg>
+<status status="PASS" starttime="20220422 05:27:16.891" endtime="20220422 05:27:16.891"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response_body}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:16.891" endtime="20220422 05:27:16.891"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${status_code}</var>
+<arg>${response.status_code}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20220422 05:27:16.891" level="INFO">${status_code} = 200</msg>
+<status status="PASS" starttime="20220422 05:27:16.891" endtime="20220422 05:27:16.891"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${status_code}</arg>
+<arg>200</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20220422 05:27:16.891" endtime="20220422 05:27:16.907"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${status_code}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:16.907" endtime="20220422 05:27:16.907"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${fname}</var>
+<arg>${response.json()}</arg>
+<arg>$.data.attributes.firstname</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20220422 05:27:16.923" level="INFO">${fname} = ['Jagan']</msg>
+<status status="PASS" starttime="20220422 05:27:16.907" endtime="20220422 05:27:16.923"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${id}</var>
+<arg>${response.json()}</arg>
+<arg>$.data.id</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20220422 05:27:16.954" level="INFO">${id} = ['21507']</msg>
+<status status="PASS" starttime="20220422 05:27:16.923" endtime="20220422 05:27:16.954"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${id_final}</var>
+<arg>${id[0]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20220422 05:27:16.954" level="INFO">${id_final} = 21507</msg>
+<status status="PASS" starttime="20220422 05:27:16.954" endtime="20220422 05:27:16.954"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${id_final}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:16.954" endtime="20220422 05:27:16.954"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${id_final}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20220422 05:27:16.954" level="INFO">${id_final} = 21507</msg>
+<status status="PASS" starttime="20220422 05:27:16.954" endtime="20220422 05:27:16.954"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${fname[0]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:16.954" endtime="20220422 05:27:16.954"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${fname[0]}</arg>
+<arg>Jagan</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20220422 05:27:16.954" endtime="20220422 05:27:16.954"/>
+</kw>
+<status status="PASS" starttime="20220422 05:27:16.829" endtime="20220422 05:27:16.954"/>
+</test>
+<test id="s1-t3" name="Update an Address" line="66">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>mysession</arg>
+<arg>${base_url}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220422 05:27:16.954" level="INFO">Creating Session using : alias=mysession, url=https://demo.spreecommerce.org, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20220422 05:27:16.954" endtime="20220422 05:27:16.954"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${access_token_final}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:16.954" endtime="20220422 05:27:16.954"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Authorization=Bearer ${access_token_final}</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220422 05:27:16.954" level="INFO">${headers} = {'Authorization': 'Bearer Gdpna9T7LYoPoVS6n_azqK7ZXe27uvvj_eSQ2ltN7-4', 'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20220422 05:27:16.954" endtime="20220422 05:27:16.954"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${headers}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:16.954" endtime="20220422 05:27:16.954"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${req_body}</var>
+<arg>API_TestScripts/TestData/UpdateAddress.json</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20220422 05:27:16.954" level="INFO" html="true">Getting file '&lt;a href="file://C:\RobotFramework_Training\RobotFramework_Demo1\API_TestScripts\TestData\UpdateAddress.json"&gt;C:\RobotFramework_Training\RobotFramework_Demo1\API_TestScripts\TestData\UpdateAddress.json&lt;/a&gt;'.</msg>
+<msg timestamp="20220422 05:27:16.954" level="INFO">${req_body} = {
+  "address": {
+    "firstname": "Changed",
+    "lastname": "Address",
+    "company": "Paper Street Soap Co.",
+    "address1": "775 Old Georgetown Road",
+    "address2": "3rd Floor",
+    "city": "Qet...</msg>
+<status status="PASS" starttime="20220422 05:27:16.954" endtime="20220422 05:27:16.954"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${req_body}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:16.954" endtime="20220422 05:27:16.954"/>
+</kw>
+<kw name="Convert String to JSON" library="JSONLibrary">
+<var>${json_body}</var>
+<arg>${req_body}</arg>
+<doc>Convert String to JSON object</doc>
+<msg timestamp="20220422 05:27:16.954" level="INFO">${json_body} = {'address': {'firstname': 'Changed', 'lastname': 'Address', 'company': 'Paper Street Soap Co.', 'address1': '775 Old Georgetown Road', 'address2': '3rd Floor', 'city': 'Qethesda', 'phone': '3488545445...</msg>
+<status status="PASS" starttime="20220422 05:27:16.954" endtime="20220422 05:27:16.954"/>
+</kw>
+<kw name="PATCH On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>mysession</arg>
+<arg>api/v2/storefront/account/addresses/${id_final}</arg>
+<arg>json=${json_body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a PATCH request on a previously created HTTP Session.</doc>
+<msg timestamp="20220422 05:27:17.032" level="INFO">PATCH Request : url=https://demo.spreecommerce.org/api/v2/storefront/account/addresses/21507 
+ path_url=/api/v2/storefront/account/addresses/21507 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer Gdpna9T7LYoPoVS6n_azqK7ZXe27uvvj_eSQ2ltN7-4', 'Content-Type': 'application/json', 'Content-Length': '284'} 
+ body=b'{"address": {"firstname": "Changed", "lastname": "Address", "company": "Paper Street Soap Co.", "address1": "775 Old Georgetown Road", "address2": "3rd Floor", "city": "Qethesda", "phone": "3488545445002", "zipcode": "90210", "state_name": "CA", "country_iso": "US", "label": "Home"}}' 
+ </msg>
+<msg timestamp="20220422 05:27:17.032" level="INFO">PATCH Response : url=https://demo.spreecommerce.org/api/v2/storefront/account/addresses/21507 
+ status=200, reason=OK 
+ headers={'Server': 'Cowboy', 'Connection': 'keep-alive', 'X-Frame-Options': 'SAMEORIGIN', 'X-Xss-Protection': '1; mode=block', 'X-Content-Type-Options': 'nosniff', 'X-Download-Options': 'noopen', 'X-Permitted-Cross-Domain-Policies': 'none', 'Referrer-Policy': 'strict-origin-when-cross-origin', 'Content-Type': 'application/vnd.api+json; charset=utf-8', 'Etag': 'W/"4646084154967dcf08be0e596bd51992"', 'Cache-Control': 'max-age=0, private, must-revalidate', 'X-Request-Id': 'faf38f7e-fdf1-48da-a2d7-ed3c83ffb271', 'X-Runtime': '0.042316', 'Date': 'Fri, 22 Apr 2022 05:27:17 GMT', 'X-Rack-Cache': 'invalidate, pass', 'Vary': 'Origin', 'Transfer-Encoding': 'chunked', 'Via': '1.1 vegur'} 
+ body={"data":{"id":"21507","type":"address","attributes":{"firstname":"Changed","lastname":"Address","address1":"775 Old Georgetown Road","address2":"3rd Floor","city":"Qethesda","zipcode":"90210","phone":"3488545445002","state_name":"California","company":"Paper Street Soap Co.","country_name":"United States","country_iso3":"USA","country_iso":"US","label":"Home","state_code":"CA"}}} 
+ </msg>
+<msg timestamp="20220422 05:27:17.032" level="INFO">C:\RobotFramework_Training\RobotFramework_Demo1\venv\lib\site-packages\urllib3\connectionpool.py:1043: InsecureRequestWarning: Unverified HTTPS request is being made to host 'demo.spreecommerce.org'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20220422 05:27:17.032" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220422 05:27:16.954" endtime="20220422 05:27:17.032"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:17.032" endtime="20220422 05:27:17.032"/>
+</kw>
+<kw name="To Json" library="RequestsLibrary">
+<var>${response_body}</var>
+<arg>${response.content}</arg>
+<arg>pretty_print = True</arg>
+<doc>*DEPRECATED* Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</doc>
+<msg timestamp="20220422 05:27:17.032" level="WARN">Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</msg>
+<msg timestamp="20220422 05:27:17.032" level="INFO">To JSON using : content={"data":{"id":"21507","type":"address","attributes":{"firstname":"Changed","lastname":"Address","address1":"775 Old Georgetown Road","address2":"3rd Floor","city":"Qethesda","zipcode":"90210","phone":"3488545445002","state_name":"California","company":"Paper Street Soap Co.","country_name":"United States","country_iso3":"USA","country_iso":"US","label":"Home","state_code":"CA"}}} </msg>
+<msg timestamp="20220422 05:27:17.032" level="INFO">To JSON using : pretty_print=pretty_print = True </msg>
+<msg timestamp="20220422 05:27:17.032" level="INFO">${response_body} = {
+    "data": {
+        "attributes": {
+            "address1": "775 Old Georgetown Road",
+            "address2": "3rd Floor",
+            "city": "Qethesda",
+            "company": "Paper Street Soa...</msg>
+<status status="PASS" starttime="20220422 05:27:17.032" endtime="20220422 05:27:17.032"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response_body}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:17.032" endtime="20220422 05:27:17.032"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${status_code}</var>
+<arg>${response.status_code}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20220422 05:27:17.032" level="INFO">${status_code} = 200</msg>
+<status status="PASS" starttime="20220422 05:27:17.032" endtime="20220422 05:27:17.032"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${status_code}</arg>
+<arg>200</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20220422 05:27:17.032" endtime="20220422 05:27:17.032"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${status_code}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:17.032" endtime="20220422 05:27:17.032"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${fname}</var>
+<arg>${response.json()}</arg>
+<arg>$.data.attributes.firstname</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20220422 05:27:17.079" level="INFO">${fname} = ['Changed']</msg>
+<status status="PASS" starttime="20220422 05:27:17.032" endtime="20220422 05:27:17.079"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${fname[0]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:17.079" endtime="20220422 05:27:17.079"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${fname[0]}</arg>
+<arg>Changed</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20220422 05:27:17.079" endtime="20220422 05:27:17.079"/>
+</kw>
+<status status="PASS" starttime="20220422 05:27:16.954" endtime="20220422 05:27:17.079"/>
+</test>
+<test id="s1-t4" name="Delete an Address" line="91">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>mysession</arg>
+<arg>${base_url}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220422 05:27:17.079" level="INFO">Creating Session using : alias=mysession, url=https://demo.spreecommerce.org, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20220422 05:27:17.079" endtime="20220422 05:27:17.079"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${access_token_final}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:17.079" endtime="20220422 05:27:17.079"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Authorization=Bearer ${access_token_final}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220422 05:27:17.079" level="INFO">${headers} = {'Authorization': 'Bearer Gdpna9T7LYoPoVS6n_azqK7ZXe27uvvj_eSQ2ltN7-4'}</msg>
+<status status="PASS" starttime="20220422 05:27:17.079" endtime="20220422 05:27:17.079"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${headers}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:17.079" endtime="20220422 05:27:17.079"/>
+</kw>
+<kw name="DELETE On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>mysession</arg>
+<arg>api/v2/storefront/account/addresses/${id_final}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<msg timestamp="20220422 05:27:17.142" level="INFO">DELETE Request : url=https://demo.spreecommerce.org/api/v2/storefront/account/addresses/21507 
+ path_url=/api/v2/storefront/account/addresses/21507 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer Gdpna9T7LYoPoVS6n_azqK7ZXe27uvvj_eSQ2ltN7-4', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg timestamp="20220422 05:27:17.142" level="INFO">DELETE Response : url=https://demo.spreecommerce.org/api/v2/storefront/account/addresses/21507 
+ status=204, reason=No Content 
+ headers={'Server': 'Cowboy', 'Content-Length': '0', 'Connection': 'keep-alive', 'X-Frame-Options': 'SAMEORIGIN', 'X-Xss-Protection': '1; mode=block', 'X-Content-Type-Options': 'nosniff', 'X-Download-Options': 'noopen', 'X-Permitted-Cross-Domain-Policies': 'none', 'Referrer-Policy': 'strict-origin-when-cross-origin', 'Cache-Control': 'no-cache', 'X-Request-Id': '0644fdb4-606a-48d7-a203-f590ef559dc5', 'X-Runtime': '0.023077', 'Date': 'Fri, 22 Apr 2022 05:27:17 GMT', 'X-Rack-Cache': 'invalidate, pass', 'Vary': 'Origin', 'Via': '1.1 vegur'} 
+ body=None 
+ </msg>
+<msg timestamp="20220422 05:27:17.142" level="INFO">C:\RobotFramework_Training\RobotFramework_Demo1\venv\lib\site-packages\urllib3\connectionpool.py:1043: InsecureRequestWarning: Unverified HTTPS request is being made to host 'demo.spreecommerce.org'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20220422 05:27:17.142" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<status status="PASS" starttime="20220422 05:27:17.079" endtime="20220422 05:27:17.142"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220422 05:27:17.142" endtime="20220422 05:27:17.142"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${status_code}</var>
+<arg>${response.status_code}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20220422 05:27:17.142" level="INFO">${status_code} = 204</msg>
+<status status="PASS" starttime="20220422 05:27:17.142" endtime="20220422 05:27:17.142"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${status_code}</arg>
+<arg>204</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20220422 05:27:17.142" endtime="20220422 05:27:17.142"/>
+</kw>
+<status status="PASS" starttime="20220422 05:27:17.079" endtime="20220422 05:27:17.142"/>
+</test>
+<status status="PASS" starttime="20220422 05:27:16.407" endtime="20220422 05:27:17.142"/>
+</suite>
+<statistics>
+<total>
+<stat pass="4" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="4" fail="0" skip="0" id="s1" name="FullFlow with dynamic token">FullFlow with dynamic token</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20220422 05:27:16.782" level="WARN">Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</msg>
+<msg timestamp="20220422 05:27:16.891" level="WARN">Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</msg>
+<msg timestamp="20220422 05:27:17.032" level="WARN">Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</msg>
+</errors>
+</robot>
